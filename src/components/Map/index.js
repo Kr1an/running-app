@@ -10,6 +10,7 @@ import {
   GoogleMap,
   Polygon,
 } from "react-google-maps";
+import Loading from '../App/Loading.png';
 var PolyBool = require('polybooljs');
 
 const mergePolyis = polyis => {
@@ -78,7 +79,22 @@ class Map extends React.Component {
 
 const withProps = injectProps({
   googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyABeIyTjm8oH7-6zx5XzE_5MILB2aPPpjs",
-  loadingElement: <div style={{ height: '100vh' }} />,
+  loadingElement: (
+    <div
+      style={{
+        width: '100%',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <img
+        className='rotatable'
+        src={Loading}
+      />
+    </div>
+  ),
   containerElement: <div style={{ height: '100vh', width: '100%' }} />,
   mapElement: <div style={{ height: '100%' }} />,
 })

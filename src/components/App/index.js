@@ -3,6 +3,8 @@ import firebase from 'firebase';
 import ReactTimeout from 'react-timeout'
 import GUI from '../GUI';
 import Map from '../Map';
+import Loading from './Loading.png';
+import './style.css';
 
 class App extends Component {
   constructor(props) {
@@ -93,7 +95,20 @@ class App extends Component {
   }
   renderAnonimous() {
     return (
-      <div>signing in</div>
+      <div
+        style={{
+          width: '100%',
+          height: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <img
+          className='rotatable'
+          src={Loading}
+        />
+      </div>
     )
   }
   render() {
