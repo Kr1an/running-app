@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+}
+
+.gm-svpc, .gm-fullscreen-control, .gmnoprint, .gm-style-cc {
+  display: none
+}
+.gm-style > div > a {
+  display: none!important
+}
