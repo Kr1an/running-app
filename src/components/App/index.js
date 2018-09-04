@@ -13,7 +13,7 @@ class App extends Component {
       active: false,
       oldPoints: [],
       newPoints: [],
-      size: 0.001,
+      size: 0.003,
     }
     firebase.auth().onAuthStateChanged(this.userStateChange);
   }
