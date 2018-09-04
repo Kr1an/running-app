@@ -14,6 +14,7 @@ import Loading from '../App/Loading.png';
 var PolyBool = require('polybooljs');
 
 const mergePolyis = polyis => {
+  PolyBool.epsilon(0.00000000000001);
   const processedPolyis = polyis.map(poly => [poly.map(x => [x.lat, x.lng])]);
   const result = processedPolyis.reduce((acc, curr) => {
     return PolyBool.union({
@@ -52,7 +53,7 @@ class Map extends React.Component {
 
     return (
       <GoogleMap
-        defaultZoom={this.props.fixed ? 16 : 12}
+        defaultZoom={12}
         zoom={this.props.fixed ? 16 : 12}
         center={this.props.focus || this.state.center}
         options={{

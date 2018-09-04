@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
+// import firebase from 'firebase';
 import ReactTimeout from 'react-timeout'
+import Fullscreen from "react-full-screen";
 import GUI from '../GUI';
 import Map from '../Map';
 import Loading from './Loading.png';
@@ -15,27 +16,41 @@ class App extends Component {
       newPoints: [],
       size: 0.003,
     }
-    firebase.auth().onAuthStateChanged(this.userStateChange);
+    // firebase.auth().onAuthStateChanged(this.userStateChange);
+    this.lockedState = false;
+  }
+  componentWillUnmount() {
+    this.stopHandler();
   }
   componentDidMount() {
-    this.setState({ oldPoints: JSON.parse(localStorage.getItem('points') || []) })
+    this.setState({ oldPoints: JSON.parse(localStorage.getItem('points') || '[]') })
   }
-  userStateChange = async user => {
-    if (user) {
-      this.setState({ user });
-      return;
-    }
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const result = await firebase.auth().signInWithPopup(provider)
-    this.setState({
-      token: result.credential.accessToken,
-    });
-  }
+  // shouldComponentUpdate(props, state) {
+  //   if (this.lockedState && this.state.active) {
+
+  //   }
+
+  // }
+  // userStateChange = async user => {
+  //   if (user) {
+  //     this.setState({ user });
+  //     return;
+  //   }
+  //   const provider = new firebase.auth.GoogleAuthProvider();
+  //   const result = await firebase.auth().signInWithRedirect(provider)
+  //   this.setState({
+  //     token: result.credential.accessToken,
+  //   });
+  // }
   activeStep = () => {
     if (!navigator.geolocation) {
+      console.log('no geolocation found');
       return;
     }
     navigator.geolocation.getCurrentPosition((position) => {
+      if (!this.interval) {
+        return;
+      }
       const newCoord = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
@@ -50,25 +65,31 @@ class App extends Component {
         }
       }
       console.log(newCoord, 'added to points');
+      debugger;
       this.setState({ newPoints: [...this.state.newPoints, newCoord], focus: newCoord })
     })
   }
   stopHandler = () => {
-    this.activeStep();
-    this.setState({ active: false });
-    this.props.clearInterval(this.activeLoop);
+    clearInterval(this.interval)
     const newOldPoints = [...this.state.oldPoints, ...this.state.newPoints];
-    localStorage.setItem('points', JSON.stringify(newOldPoints));
-    this.setState({ oldPoints: newOldPoints, newPoints: [] })
+    this.setState({ active:false, oldPoints: newOldPoints, newPoints: [], active: false }, () => {
+      localStorage.setItem('points', JSON.stringify(newOldPoints));
+    })
   }
   startHandler = () => {
-    this.activeStep();
-    this.setState({ active: true });
-    this.activeLoop = this.props.setInterval(this.activeStep, 1000);
+    this.setState({ active: true }, () => {
+      this.interval = setInterval(
+        this.activeStep,
+        1000,
+      );
+    })
   }
   renderWithAuth() {
     return (
-      <div>
+      <Fullscreen
+        enabled={this.state.active}
+        onChange={isFull => this.setState({isFull})}
+      >
         <Map
           outer={[
             {"lat":53.86052163377647,"lng":27.34381718063355},
@@ -90,7 +111,7 @@ class App extends Component {
           stop={this.stopHandler}
           start={this.startHandler}
         />
-      </div>
+      </Fullscreen>
     )
   }
   renderAnonimous() {
@@ -114,7 +135,7 @@ class App extends Component {
   render() {
     const { user } = this.state;
 
-    if (user) {
+    if (true) {
       return this.renderWithAuth();
     }
     return this.renderAnonimous();

@@ -5,9 +5,9 @@ import Zoom from '@material-ui/core/Zoom';
 import Button from '@material-ui/core/Button';
 
 import {
-  DirectionsRun,
-  Pause,
-} from '@material-ui/icons'
+  MdDirectionsRun,
+  MdStop,
+} from 'react-icons/md'
 
 function TabContainer(props) {
   const { children, dir } = props;
@@ -71,7 +71,7 @@ class FloatingActionButtonZoom extends React.Component {
               bottom: '20px'
             }}
           >
-            <DirectionsRun />
+            <MdDirectionsRun size="50%" />
           </Button>
         </Zoom>
         <Zoom
@@ -93,7 +93,7 @@ class FloatingActionButtonZoom extends React.Component {
               background: '#fb0b6a',
             }}
           >
-            <Pause />
+            <MdStop size="50%" />
           </Button>
         </Zoom>
       </div>
