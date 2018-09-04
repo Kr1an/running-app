@@ -66,7 +66,7 @@ class FloatingActionButtonZoom extends React.Component {
             color={'primary'}
             onClick={this.props.start}
             style={{
-              position: 'absolute',
+              position: 'fixed',
               right: '20px',
               bottom: '20px'
             }}
@@ -87,7 +87,7 @@ class FloatingActionButtonZoom extends React.Component {
             color={'primary'}
             onClick={this.props.stop}
             style={{
-              position: 'absolute',
+              position: 'fixed',
               right: '20px',
               bottom: '20px',
               background: '#fb0b6a',
