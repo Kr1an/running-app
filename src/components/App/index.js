@@ -65,16 +65,19 @@ class App extends Component {
         }
       }
       console.log(newCoord, 'added to points');
-      debugger;
       this.setState({ newPoints: [...this.state.newPoints, newCoord], focus: newCoord })
     })
   }
   stopHandler = () => {
     clearInterval(this.interval)
     const newOldPoints = [...this.state.oldPoints, ...this.state.newPoints];
-    this.setState({ active:false, oldPoints: newOldPoints, newPoints: [], active: false }, () => {
+    this.setState({ active:false, oldPoints: newOldPoints, newPoints: [] }, () => {
       localStorage.setItem('points', JSON.stringify(newOldPoints));
     })
+  }
+  stopNoSaveHandler = () => {
+    clearInterval(this.interval)
+    this.setState({ active:false, newPoints: [] }); 
   }
   startHandler = () => {
     this.setState({ active: true }, () => {
@@ -110,6 +113,7 @@ class App extends Component {
           active={this.state.active}
           stop={this.stopHandler}
           start={this.startHandler}
+          stopNoSave={this.stopNoSaveHandler}
         />
       </Fullscreen>
     )

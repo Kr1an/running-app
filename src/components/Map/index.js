@@ -61,7 +61,9 @@ class Map extends React.Component {
           zoomControl: !this.props.fixed,
           scrollwheel: !this.props.fixed,
           disableDoubleClickZoom: !this.props.fixed,
+          gestureHandling: 'greedy',
         }}
+        
       >
         <Polygon
           paths={[

@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import {
   MdDirectionsRun,
   MdStop,
+  MdClose,
 } from 'react-icons/md'
 
 function TabContainer(props) {
@@ -94,6 +95,34 @@ class FloatingActionButtonZoom extends React.Component {
             }}
           >
             <MdStop size="50%" />
+          </Button>
+        </Zoom>
+        <Zoom
+          in={active}
+          timeout={transitionDuration}
+          style={{
+            transitionDelay: `${active ? transitionDuration.exit : 0}ms`,
+          }}
+          unmountOnExit
+        >
+          <Button
+            variant='fab'
+            color={'primary'}
+            onClick={this.props.stopNoSave}
+            style={{
+              position: 'fixed',
+              right: '20px',
+              top: '20px',
+              background: 'transparent',
+              boxShadow: 'none',
+            }}
+          >
+            <MdClose
+              size="50%"
+              style={{
+                color: 'black'
+              }}
+            />
           </Button>
         </Zoom>
       </div>
