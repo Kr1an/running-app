@@ -9,6 +9,7 @@ import {
   withGoogleMap,
   GoogleMap,
   Polygon,
+  Marker
 } from "react-google-maps";
 import Loading from '../App/Loading.png';
 var PolyBool = require('polybooljs');
@@ -64,7 +65,7 @@ class Map extends React.Component {
           gestureHandling: 'greedy',
         }}
         
-      >
+      >        
         <Polygon
           paths={[
             outerPolygon,
@@ -74,6 +75,26 @@ class Map extends React.Component {
             strokeWeight: 0,
           }}
         />
+        {
+          !this.props.focus ? null : (
+            <Marker
+              position={this.props.focus}
+              options={{
+                icon: {
+                  path: window.google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                  fillColor: 'orange',
+                  scale: 5,
+                  size: new window.google.maps.Size(20, 20),
+                  anchor: new window.google.maps.Point(0, 2),
+                  fillOpacity: 0.8,
+                  strokeWeight: 0,
+                  rotation: -this.props.orientationAngle,
+                },
+              }} 
+            />
+
+          )
+        }
       </GoogleMap>
     );
   }
